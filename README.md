@@ -1,10 +1,29 @@
-# CSV to OJS XML Import for OJS 3.3.0
+# CSV to OJS XML Import for OJS 3.4
+
 This application will convert a CSV file into the OJS XML native import file.
 The XSD is included with this project in the `docroot/output` directory.
-Sample CSV files for both users and issues are included in the `examples`
- directory.
+Sample CSV files for both users and issues are included in the `examples` directory.
 
 Note: This is NOT a comprehensive CSV to OJS XML conversion, and many fields are left out.
+
+## 3.4
+
+This version has been forked to allow conversion to the format required by OJS 3.4. It also requires some hacky modifications to OJS itself in ./plugins/importexport/native/filter/NativeXmlIssueFilter.php
+
+Change line 340 from: 
+`$section->setSequence($node->getAttribute('seq'));`
+
+to: 
+
+`$section->setSequence((float) $node->getAttribute('seq'));`
+
+Change line 347 from: 
+
+`$section->setAbstractWordCount($node->getAttribute('abstract_word_count'));`
+
+to: 
+
+`$section->setAbstractWordCount((int) $node->getAttribute('abstract_word_count'));`
 
 ## Known Issues
 
@@ -31,6 +50,7 @@ php csvToXmlConverter issues username ./input_directory ./output_directory
 ### Issue CSVs
 
 #### Description
+
 The CSV must be in the format of:
 issueTitle,sectionTitle,sectionAbbrev,authors,affiliation,DOI,articleTitle,year,datePublished,volume,issue,startPage,endPage,articleAbstract,galleyLabel,authorEmail,fileName,keywords,citations,cover_image_filename,cover_image_alt_text,licenseUrl,copyrightHolder,copyrightYear,locale_2,issueTitle_2,sectionTitle_2,articleTitle_2,articleAbstract_2
 
@@ -48,9 +68,9 @@ The following fields are optional and can be left empty:
 DOI, volume, issue, subtitle, keywords, citations, affiliation, cover image (both cover_image_filename and cover_image_alt_text must be included or omitted),licenseUrl,copyrightHolder,copyrightYear,locale_2,issueTitle_2,sectionTitle_2,articleTitle_2,articleAbstract_2
 
 #### Update May 2024
+
 Added extra fields for basic multilingual support. The extra fields are: locale_2,issueTitle_2,sectionTitle_2,articleTitle_2,articleAbstract_2 
 locale_2 should use the same format (ie fr_CA) that ojs uses for it's Locale field.
-
 
 #### Instructions
 
@@ -60,8 +80,7 @@ locale_2 should use the same format (ie fr_CA) that ojs uses for it's Locale fie
    * You can place multiple csv files in the directory however do not split a single issue across multiple csv files, but you can have multiple issues in a single csv file.
 3. Place all PDF galleys in the `article_galleys` directory
 4. If you have cover images place them in the `issue_cover_images` directory
-5. Run `php csvToXmlConverter.php issues OJS_USERNAME ./docroot/csv/abstracts ./docroot/output`
-5a. Or, if using Docker: `docker run -it --rm --name pkp_import_script -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:8.2-cli php csvToXmlConverter.php issues OJS_USERNAME ./docroot/csv/abstracts ./docroot/output`
+5. Run `php csvToXmlConverter.php issues OJS_USERNAME ./docroot/csv/abstracts ./docroot/output` Or, if using Docker: `docker run -it --rm --name pkp_import_script -v "$PWD":/usr/src/pkp_import_script -w /usr/src/pkp_import_script php:8.2-cli php csvToXmlConverter.php issues OJS_USERNAME ./docroot/csv/abstracts ./docroot/output`
 6. The XML file(s) will be output in the specified output directory (`docroot/output` directory in this case)
 
 ### User CSVs
