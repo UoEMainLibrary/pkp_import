@@ -11,6 +11,7 @@ Note: This is NOT a comprehensive CSV to OJS XML conversion, and many fields are
 This version has been forked to allow conversion to the format required by OJS 3.4. It also requires some hacky modifications to OJS itself in ./plugins/importexport/native/filter/NativeXmlIssueFilter.php
 
 Change line 340 from: 
+
 `$section->setSequence($node->getAttribute('seq'));`
 
 to: 
@@ -65,7 +66,7 @@ If there is only 1 affiliation and multiple authors that 1 affiliation will be a
 citations can be seperated with a new line.
 
 The following fields are optional and can be left empty:
-DOI, volume, issue, subtitle, keywords, citations, affiliation, cover image (both cover_image_filename and cover_image_alt_text must be included or omitted),licenseUrl,copyrightHolder,copyrightYear,locale_2,issueTitle_2,sectionTitle_2,articleTitle_2,articleAbstract_2
+DOI, volume, issue, subtitle, keywords, citations, affiliation, cover image (both cover_image_filename and cover_image_alt_text must be included or omitted), licenseUrl, copyrightHolder,copyrightYear, locale_2, issueTitle_2, sectionTitle_2, articleTitle_2, articleAbstract_2
 
 #### Update May 2024
 
