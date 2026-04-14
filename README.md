@@ -60,8 +60,9 @@ locale_2 should use the same format (ie fr_CA) that ojs uses for it's Locale fie
    * You can place multiple csv files in the directory however do not split a single issue across multiple csv files, but you can have multiple issues in a single csv file.
 3. Place all PDF galleys in the `article_galleys` directory
 4. If you have cover images place them in the `issue_cover_images` directory
-4. Run `php csvToXmlConverter.php issues ojs_username ./docroot/csv/abstracts ./docroot/output`
-5. The XML file(s) will be output in the specified output directory (`docroot/output` directory in this case)
+5. Run `php csvToXmlConverter.php issues OJS_USERNAME ./docroot/csv/abstracts ./docroot/output`
+5a. Or, if using Docker: `docker run -it --rm --name pkp_import_script -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:8.2-cli php csvToXmlConverter.php issues OJS_USERNAME ./docroot/csv/abstracts ./docroot/output`
+6. The XML file(s) will be output in the specified output directory (`docroot/output` directory in this case)
 
 ### User CSVs
 
